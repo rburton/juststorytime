@@ -8,7 +8,7 @@
     "velocity": 0,
     "interactive": {
       "old_color": "0xB053EE",
-      "color": "0x99ff99",
+      "color": "0xB053EE",
       "strength": 3,
       "distance": 20
     }
@@ -16,11 +16,34 @@
   "start": "scene-00",
   "scenes": {
     "scene-00": {
-      "background": "/juststorytime/assets/scene-00/background.png",
+      "background": "/juststorytime/assets/scene-00/living_room.png",
       "objects": [
         {
-          "name": "Richard",
-          "image": "/juststorytime/assets/characters/richard.png",
+          "name": "Presely",
+          "image": "/juststorytime/assets/characters/presely.png",
+          "type": "character",
+          "settings": {
+            "gravity": 0.3,
+            "scale": {
+              "height": 0.3,
+              "width": 0.3
+            }
+          },
+          "position": {
+            "x1": 50,
+            "y1": 0,
+            "x2": 100,
+            "y2": 1000
+          },
+          "actions": {
+            "touch": {
+              "sound": "/juststorytime/assets/sounds/joe-speech.mp3"
+            }
+          }
+        },
+        {
+          "name": "Joe",
+          "image": "/juststorytime/assets/characters/joe-standing.png",
           "type": "character",
           "settings": {
             "gravity": 0.3
@@ -33,44 +56,16 @@
           },
           "actions": {
             "touch": {
-              "sound": "/juststorytime/assets/sounds/hi-uncle.mp3"
+              "sound": "/juststorytime/assets/sounds/joe-speech.mp3"
             }
           }
         },
         {
-          "name": "Cat",
-          "image": "/juststorytime/assets/characters/cat.png",
+          "name": "Cash",
+          "image": "/juststorytime/assets/characters/cash.png",
           "type": "character",
           "settings": {
-            "gravity": 0.3,
-            "scale": {
-              "height": 0.3,
-              "width": 0.3
-            }
-          },
-          "position": {
-            "x1": 600,
-            "y1": 0,
-            "x2": 100,
-            "y2": 1000
-          },
-          "actions": {
-            "touch": {
-              "sound": "/juststorytime/assets/sounds/meow.mp3"
-            }
-          }
-        },
-        {
-          "name": "Frog",
-          "image": "/juststorytime/assets/characters/frog.png",
-          "type": "object",
-          "settings": {
-            "gravity": 0.3,
-            "scale": {
-              "height": 0.2,
-              "width": 0.2
-            },
-            "velocity": 0
+            "gravity": 0.3
           },
           "position": {
             "x1": 500,
@@ -81,37 +76,13 @@
           "actions": {
             "touch": {
               "action": "jump",
-              "sound": "/juststorytime/assets/sounds/ribbit.mp3"
+              "sound": "/juststorytime/assets/sounds/cash-snoring.mp3"
             }
           }
         },
         {
-          "name": "Apple",
-          "image": "/juststorytime/assets/characters/apple.png",
-          "type": "object",
-          "settings": {
-            "gravity": 0.3,
-            "scale": {
-              "height": 0.3,
-              "width": 0.3
-            }
-          },
-          "position": {
-            "x1": 10,
-            "y1": 0,
-            "x2": 100,
-            "y2": 1000
-          },
-          "actions": {
-            "touch": {
-              "action": "fade_out",
-              "speed": 0.02
-            }
-          }
-        },
-        {
-          "name": "Pigeon",
-          "image": "/juststorytime/assets/characters/pigeon.png",
+          "name": "Fly",
+          "image": "/juststorytime/assets/characters/fly.png",
           "type": "object",
           "settings": {
             "gravity": 0.0,
@@ -131,65 +102,66 @@
           },
           "actions": {
             "touch": {
-              "action": "spin"
+              "action": "fade_out",
+              "speed": 0.1,
+              "sound": "/juststorytime/assets/sounds/splat.mp3"
             }
           }
         },
         {
-          "name": "cloud1",
-          "image": "/juststorytime/assets/characters/cloud1.png",
+          "name": "Fly",
+          "image": "/juststorytime/assets/characters/fly.png",
           "type": "object",
           "settings": {
             "gravity": 0.0,
             "scale": {
-              "height": 0.5,
-              "width": 0.5
+              "height": 0.3,
+              "width": 0.3
             }
           },
           "position": {
-            "x1": 1024,
-            "y1": 90
+            "x1": 1100,
+            "y1": 100
           },
           "animate": {
             "type": "right_to_left",
-            "speed": 0.4,
-            "pause_in_ms": 1000
+            "speed": 1,
+            "pause_in_ms": 400
+          },
+          "actions": {
+            "touch": {
+              "action": "fade_out",
+              "speed": 0.02,
+              "sound": "/juststorytime/assets/sounds/splat.mp3"
+            }
           }
         },
         {
-          "name": "cloud2",
-          "image": "/juststorytime/assets/characters/cloud1.png",
+          "name": "Fly",
+          "image": "/juststorytime/assets/characters/fly.png",
           "type": "object",
           "settings": {
             "gravity": 0.0,
             "scale": {
-              "height": 0.4,
-              "width": 0.4
+              "height": 0.3,
+              "width": 0.3
             }
           },
           "position": {
-            "x1": 924,
-            "y1": 220
+            "x1": 1100,
+            "y1": 190
           },
           "animate": {
             "type": "right_to_left",
-            "speed": 0.5,
-            "pause_in_ms": 0
+            "speed": 2,
+            "pause_in_ms": 3500
+          },
+          "actions": {
+            "touch": {
+              "action": "fade_out",
+              "sound": "/juststorytime/assets/sounds/splat.mp3"
+            }
           }
-        }
-      ],
-      "sounds": [
-        {
-          "id": "00",
-          "file": "/juststorytime/assets/scene-00/music.mp3",
-          "wait_in_ms": 0,
-          "volume": 0.1
-        },
-        {
-          "id": "01",
-          "file": "/juststorytime/assets/scene-00/narrative-2.mp3",
-          "wait_in_ms": 500,
-          "volume": 0.9
         }
       ],
       "transition": {

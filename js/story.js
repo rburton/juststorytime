@@ -14,9 +14,11 @@ class Story {
                 const scene = this.data.scenes[id];
                 this.manifest.push({alias: `${id}_background`, src: scene.background});
                 const sounds = scene.sounds;
-                sounds.forEach((sound) => {
-                    this.manifest.push({alias: `${sound.id}_sound`, src: sound.file});
-                });
+                if (sounds) {
+                    sounds.forEach((sound) => {
+                        this.manifest.push({alias: `${sound.id}_sound`, src: sound.file});
+                    });
+                }
                 const objects = scene.objects;
                 objects.forEach((obj) => {
                     this.manifest.push({alias: `${obj.name}_object`, src: obj.image});
@@ -92,7 +94,7 @@ class Scene {
 
     playSound() {
         const sounds = this.scene.sounds;
-        if (sounds.length) {
+        if (sounds && sounds.length) {
             sounds.forEach((meta) => {
                 if (meta.wait_in_ms !== undefined) {
                     this.play(meta);
@@ -259,6 +261,9 @@ class Character {
             });
             return () => {
                 this.ticker.start();
+                if (meta.sound) {
+                    this.resources[meta.sound].play();
+                }
             };
         }
         if (meta.sound) {
