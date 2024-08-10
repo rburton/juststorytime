@@ -1,8 +1,8 @@
 {
   "title": "Story time",
   "splash": {
-    "image": "/assets/splash.png",
-    "sound": "/assets/splash.mp3"
+    "image": "/juststorytime/assets/splash.png",
+    "sound": "/juststorytime/assets/splash.mp3"
   },
   "settings": {
     "velocity": 0,
@@ -16,11 +16,11 @@
   "start": "scene-00",
   "scenes": {
     "scene-00": {
-      "background": "/assets/scene-00/background.png",
+      "background": "/juststorytime/assets/scene-00/background.png",
       "objects": [
         {
           "name": "Richard",
-          "image": "/assets/characters/richard.png",
+          "image": "/juststorytime/assets/characters/richard.png",
           "type": "character",
           "settings": {
             "gravity": 0.3
@@ -33,13 +33,13 @@
           },
           "actions": {
             "touch": {
-              "sound": "/assets/sounds/hi-uncle.mp3"
+              "sound": "/juststorytime/assets/sounds/hi-uncle.mp3"
             }
           }
         },
         {
           "name": "Cat",
-          "image": "/assets/characters/cat.png",
+          "image": "/juststorytime/assets/characters/cat.png",
           "type": "character",
           "settings": {
             "gravity": 0.3,
@@ -56,13 +56,13 @@
           },
           "actions": {
             "touch": {
-              "sound": "/assets/sounds/meow.mp3"
+              "sound": "/juststorytime/assets/sounds/meow.mp3"
             }
           }
         },
         {
           "name": "Frog",
-          "image": "/assets/characters/frog.png",
+          "image": "/juststorytime/assets/characters/frog.png",
           "type": "object",
           "settings": {
             "gravity": 0.3,
@@ -81,13 +81,13 @@
           "actions": {
             "touch": {
               "action": "jump",
-              "sound": "/assets/sounds/ribbit.mp3"
+              "sound": "/juststorytime/assets/sounds/ribbit.mp3"
             }
           }
         },
         {
           "name": "Apple",
-          "image": "/assets/characters/apple.png",
+          "image": "/juststorytime/assets/characters/apple.png",
           "type": "object",
           "settings": {
             "gravity": 0.3,
@@ -111,7 +111,7 @@
         },
         {
           "name": "Pigeon",
-          "image": "/assets/characters/pigeon.png",
+          "image": "/juststorytime/assets/characters/pigeon.png",
           "type": "object",
           "settings": {
             "gravity": 0.0,
@@ -137,7 +137,7 @@
         },
         {
           "name": "cloud1",
-          "image": "/assets/characters/cloud1.png",
+          "image": "/juststorytime/assets/characters/cloud1.png",
           "type": "object",
           "settings": {
             "gravity": 0.0,
@@ -158,7 +158,7 @@
         },
         {
           "name": "cloud2",
-          "image": "/assets/characters/cloud1.png",
+          "image": "/juststorytime/assets/characters/cloud1.png",
           "type": "object",
           "settings": {
             "gravity": 0.0,
@@ -181,13 +181,13 @@
       "sounds": [
         {
           "id": "00",
-          "file": "/assets/scene-00/music.mp3",
+          "file": "/juststorytime/assets/scene-00/music.mp3",
           "wait_in_ms": 0,
           "volume": 0.1
         },
         {
           "id": "01",
-          "file": "/assets/scene-00/narrative-2.mp3",
+          "file": "/juststorytime/assets/scene-00/narrative-2.mp3",
           "wait_in_ms": 500,
           "volume": 0.9
         }
@@ -195,7 +195,7 @@
       "transition": {
         "in": {
           "effect": "fade",
-          "sound": "/assets/wind.mp3"
+          "sound": "/juststorytime/assets/wind.mp3"
         }
       }
     }
