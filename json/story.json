@@ -1,0 +1,203 @@
+{
+  "title": "Story time",
+  "splash": {
+    "image": "/assets/splash.png",
+    "sound": "/assets/splash.mp3"
+  },
+  "settings": {
+    "velocity": 0,
+    "interactive": {
+      "old_color": "0xB053EE",
+      "color": "0x99ff99",
+      "strength": 3,
+      "distance": 20
+    }
+  },
+  "start": "scene-00",
+  "scenes": {
+    "scene-00": {
+      "background": "/assets/scene-00/background.png",
+      "objects": [
+        {
+          "name": "Richard",
+          "image": "/assets/characters/richard.png",
+          "type": "character",
+          "settings": {
+            "gravity": 0.3
+          },
+          "position": {
+            "x1": 130,
+            "y1": 0,
+            "x2": 100,
+            "y2": 1000
+          },
+          "actions": {
+            "touch": {
+              "sound": "/assets/sounds/hi-uncle.mp3"
+            }
+          }
+        },
+        {
+          "name": "Cat",
+          "image": "/assets/characters/cat.png",
+          "type": "character",
+          "settings": {
+            "gravity": 0.3,
+            "scale": {
+              "height": 0.3,
+              "width": 0.3
+            }
+          },
+          "position": {
+            "x1": 600,
+            "y1": 0,
+            "x2": 100,
+            "y2": 1000
+          },
+          "actions": {
+            "touch": {
+              "sound": "/assets/sounds/meow.mp3"
+            }
+          }
+        },
+        {
+          "name": "Frog",
+          "image": "/assets/characters/frog.png",
+          "type": "object",
+          "settings": {
+            "gravity": 0.3,
+            "scale": {
+              "height": 0.2,
+              "width": 0.2
+            },
+            "velocity": 0
+          },
+          "position": {
+            "x1": 500,
+            "y1": 0,
+            "x2": 100,
+            "y2": 1000
+          },
+          "actions": {
+            "touch": {
+              "action": "jump",
+              "sound": "/assets/sounds/ribbit.mp3"
+            }
+          }
+        },
+        {
+          "name": "Apple",
+          "image": "/assets/characters/apple.png",
+          "type": "object",
+          "settings": {
+            "gravity": 0.3,
+            "scale": {
+              "height": 0.3,
+              "width": 0.3
+            }
+          },
+          "position": {
+            "x1": 10,
+            "y1": 0,
+            "x2": 100,
+            "y2": 1000
+          },
+          "actions": {
+            "touch": {
+              "action": "fade_out",
+              "speed": 0.02
+            }
+          }
+        },
+        {
+          "name": "Pigeon",
+          "image": "/assets/characters/pigeon.png",
+          "type": "object",
+          "settings": {
+            "gravity": 0.0,
+            "scale": {
+              "height": 0.3,
+              "width": 0.3
+            }
+          },
+          "position": {
+            "x1": 1100,
+            "y1": 170
+          },
+          "animate": {
+            "type": "right_to_left",
+            "speed": 1,
+            "pause_in_ms": 6000
+          },
+          "actions": {
+            "touch": {
+              "action": "spin"
+            }
+          }
+        },
+        {
+          "name": "cloud1",
+          "image": "/assets/characters/cloud1.png",
+          "type": "object",
+          "settings": {
+            "gravity": 0.0,
+            "scale": {
+              "height": 0.5,
+              "width": 0.5
+            }
+          },
+          "position": {
+            "x1": 1024,
+            "y1": 90
+          },
+          "animate": {
+            "type": "right_to_left",
+            "speed": 0.4,
+            "pause_in_ms": 1000
+          }
+        },
+        {
+          "name": "cloud2",
+          "image": "/assets/characters/cloud1.png",
+          "type": "object",
+          "settings": {
+            "gravity": 0.0,
+            "scale": {
+              "height": 0.4,
+              "width": 0.4
+            }
+          },
+          "position": {
+            "x1": 924,
+            "y1": 220
+          },
+          "animate": {
+            "type": "right_to_left",
+            "speed": 0.5,
+            "pause_in_ms": 0
+          }
+        }
+      ],
+      "sounds": [
+        {
+          "id": "00",
+          "file": "/assets/scene-00/music.mp3",
+          "wait_in_ms": 0,
+          "volume": 0.1
+        },
+        {
+          "id": "01",
+          "file": "/assets/scene-00/narrative-2.mp3",
+          "wait_in_ms": 500,
+          "volume": 0.9
+        }
+      ],
+      "transition": {
+        "in": {
+          "effect": "fade",
+          "sound": "/assets/wind.mp3"
+        }
+      }
+    }
+  }
+}

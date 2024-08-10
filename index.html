@@ -1,0 +1,24 @@
+<html layout:decorate="~{layout}"><head>
+    
+        <title>Home Page</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/8.3.0/pixi.min.js" integrity="sha512-UvXV7q9BgAr+fpoU/NH4/iqkkUv2YOn5h93JAvuC9KZ9TlSrlxJy0UWRi6lE157L7tdkxaohztZpvKIS/XdoVw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://unpkg.com/@pixi/sound/dist/pixi-sound.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/pixi-filters@6.0.4/dist/pixi-filters.js"></script>
+        <script src="/js/story.js"></script>
+        <style>
+            body {
+                margin: 0; /* Removes default margin (which can appear as a border) */
+                padding: 0; /* Removes default padding */
+            }
+        </style>
+    
+</head>
+<body>
+
+    <script type="module">
+        const response = await fetch("/json/story.json");
+        const data = await response.json();
+        const story = new Story(data);
+        await story.load();
+    </script>
+</body></html>
