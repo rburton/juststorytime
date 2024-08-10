@@ -218,7 +218,8 @@ class Character {
         this.interactive();
         this.sprite.interactive = true;
         this.sprite.buttonMode = true;
-        this.sprite.onclick = this.findOnTouchAction(meta);
+        this.sprite.eventMode = 'static';
+        this.sprite.onpointerdown = this.findOnTouchAction(meta);
     }
 
     interactive() {
