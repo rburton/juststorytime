@@ -219,7 +219,7 @@ class Character {
         this.sprite.interactive = true;
         this.sprite.buttonMode = true;
         this.sprite.eventMode = 'static';
-        this.sprite.onpointerdown = this.findOnTouchAction(meta);
+        this.sprite.addListener('pointerup', this.findOnTouchAction(meta));
     }
 
     interactive() {
