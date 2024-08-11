@@ -1,8 +1,8 @@
 {
   "title": "Story time",
   "splash": {
-    "image": "/juststorytime/assets/splash.png",
-    "sound": "/juststorytime/assets/splash.mp3"
+    "image": "/assets/splash.png",
+    "sound": "/assets/splash.mp3"
   },
   "settings": {
     "velocity": 0,
@@ -16,11 +16,11 @@
   "start": "scene-00",
   "scenes": {
     "scene-00": {
-      "background": "/juststorytime/assets/scene-00/living_room.png",
+      "background": "/assets/scene-00/living_room.png",
       "objects": [
         {
           "name": "Presely",
-          "image": "/juststorytime/assets/characters/presely.png",
+          "image": "/assets/characters/presely.png",
           "type": "character",
           "settings": {
             "gravity": 0.3,
@@ -37,32 +37,42 @@
           },
           "actions": {
             "touch": {
-              "sound": "/juststorytime/assets/sounds/joe-speech.mp3"
+              "effects": [
+                {
+                  "name": "audio",
+                  "sound": "/assets/sounds/hey-wait-up.mp3"
+                }
+              ]
             }
           }
         },
         {
           "name": "Joe",
-          "image": "/juststorytime/assets/characters/joe-standing.png",
+          "image": "/assets/characters/joe-standing.png",
           "type": "character",
           "settings": {
             "gravity": 0.3
           },
           "position": {
-            "x1": 130,
+            "x1": 230,
             "y1": 0,
             "x2": 100,
             "y2": 1000
           },
           "actions": {
             "touch": {
-              "sound": "/juststorytime/assets/sounds/joe-speech.mp3"
+              "effects": [
+                {
+                  "name": "audio",
+                  "sound": "/assets/sounds/joe-speech.mp3"
+                }
+              ]
             }
           }
         },
         {
           "name": "Cash",
-          "image": "/juststorytime/assets/characters/cash.png",
+          "image": "/assets/characters/cash.png",
           "type": "character",
           "settings": {
             "gravity": 0.3
@@ -75,14 +85,18 @@
           },
           "actions": {
             "touch": {
-              "action": "jump",
-              "sound": "/juststorytime/assets/sounds/cash-snoring.mp3"
+              "effects": [
+                {
+                  "name": "audio",
+                  "sound": "/assets/sounds/cash-snoring.mp3"
+                }
+              ]
             }
           }
         },
         {
           "name": "Fly",
-          "image": "/juststorytime/assets/characters/fly.png",
+          "image": "/assets/characters/fly.png",
           "type": "object",
           "settings": {
             "gravity": 0.0,
@@ -102,15 +116,26 @@
           },
           "actions": {
             "touch": {
-              "action": "fade_out",
-              "speed": 0.1,
-              "sound": "/juststorytime/assets/sounds/splat.mp3"
+              "effects": [
+                {
+                  "name": "transition",
+                  "image": "/assets/characters/goo.png"
+                },
+                {
+                  "name": "audio",
+                  "sound": "/assets/sounds/splat.mp3"
+                },
+                {
+                  "name": "fade_out",
+                  "speed": 0.01
+                }
+              ]
             }
           }
         },
         {
           "name": "Fly",
-          "image": "/juststorytime/assets/characters/fly.png",
+          "image": "/assets/characters/fly.png",
           "type": "object",
           "settings": {
             "gravity": 0.0,
@@ -130,15 +155,26 @@
           },
           "actions": {
             "touch": {
-              "action": "fade_out",
-              "speed": 0.02,
-              "sound": "/juststorytime/assets/sounds/splat.mp3"
+              "effects": [
+                {
+                  "name": "transition",
+                  "image": "/assets/characters/goo.png"
+                },
+                {
+                  "name": "audio",
+                  "sound": "/assets/sounds/splat.mp3"
+                },
+                {
+                  "name": "fade_out",
+                  "speed": 0.01
+                }
+              ]
             }
           }
         },
         {
           "name": "Fly",
-          "image": "/juststorytime/assets/characters/fly.png",
+          "image": "/assets/characters/fly.png",
           "type": "object",
           "settings": {
             "gravity": 0.0,
@@ -158,8 +194,60 @@
           },
           "actions": {
             "touch": {
-              "action": "fade_out",
-              "sound": "/juststorytime/assets/sounds/splat.mp3"
+              "effects": [
+                {
+                  "name": "transition",
+                  "image": "/assets/characters/goo.png"
+                },
+                {
+                  "name": "audio",
+                  "sound": "/assets/sounds/splat.mp3"
+                },
+                {
+                  "name": "fade_out",
+                  "speed": 0.01
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Fly",
+          "image": "/assets/characters/fly.png",
+          "type": "object",
+          "settings": {
+            "flip": true,
+            "gravity": 0.0,
+            "scale": {
+              "height": 0.3,
+              "width": 0.3
+            }
+          },
+          "position": {
+            "x1": -100,
+            "y1": 190
+          },
+          "animate": {
+            "type": "left_to_right",
+            "speed": 2,
+            "pause_in_ms": 100
+          },
+          "actions": {
+            "touch": {
+              "effects": [
+                {
+                  "name": "transition",
+                  "image": "/assets/characters/goo.png"
+                },
+                {
+                  "name": "audio",
+                  "sound": "/assets/sounds/splat.mp3"
+                },
+                {
+                  "name": "fade_out",
+                  "speed": 0.01
+                }
+              ]
             }
           }
         }
@@ -167,7 +255,7 @@
       "transition": {
         "in": {
           "effect": "fade",
-          "sound": "/juststorytime/assets/wind.mp3"
+          "sound": "/assets/wind.mp3"
         }
       }
     }

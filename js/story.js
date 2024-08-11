@@ -9,31 +9,43 @@ class Story {
             {alias: 'splash_sound', src: json.splash.sound},
         ];
 
+        const assets = []
         Object.keys(this.scenes)
             .forEach((id) => {
                 const scene = this.data.scenes[id];
-                this.manifest.push({alias: `${id}_background`, src: scene.background});
+                assets.push(scene.background);
+
                 const sounds = scene.sounds;
                 if (sounds) {
                     sounds.forEach((sound) => {
-                        this.manifest.push({alias: `${sound.id}_sound`, src: sound.file});
+                        assets.push(sound.file);
                     });
                 }
                 const objects = scene.objects;
                 objects.forEach((obj) => {
-                    this.manifest.push({alias: `${obj.name}_object`, src: obj.image});
+                    assets.push(obj.image);
                     if (obj.actions) {
                         const actions = obj.actions;
                         Object.keys(actions)
                             .forEach((action) => {
                                 const meta = actions[action];
-                                if (meta.sound) {
-                                    this.manifest.push({alias: `${meta.sound}_sound`, src: meta.sound});
+                                if (meta && meta.effects) {
+                                    const effects = meta.effects;
+                                    effects.forEach((effect) => {
+                                        if (effect.name === 'audio') {
+                                            assets.push(effect.sound);
+                                        } else if (effect.name === 'transition') {
+                                            assets.push(effect.image);
+                                        }
+                                    });
                                 }
                             });
                     }
                 });
             });
+        assets.forEach((asset) => {
+            this.manifest.push({alias: asset, src: asset});
+        });
     }
 
     async load() {
@@ -140,7 +152,6 @@ class Character {
         this.image = data.image;
         this.position = data.position;
         this.resources = story.resources;
-        this.onTouch = {};
     }
 
     onShow() {
@@ -154,6 +165,9 @@ class Character {
             const scale = settings.scale;
             if (scale) {
                 this.sprite.scale.set(scale.height, scale.width);
+            }
+            if (this.settings.flip) {
+                this.sprite.width *= -1;
             }
         }
         this.configureActions();
@@ -209,19 +223,42 @@ class Character {
                     const action = property[0];
                     const meta = property[1];
                     if (action === 'touch') {
-                        this.setupOnTouch(meta);
+                        this.setupOnTouch(meta.effects);
                     }
                 });
         }
     }
 
-    setupOnTouch(meta) {
-        this.onTouch = meta;
+    setupOnTouch(effects) {
+        const chain = effects.map((effect) => {
+            console.log(`Creating new effect ${effect.name}`);
+            if (effect.name === 'audio') {
+                return new AudioEffect(this.app, this.sprite, this.resources, effect);
+            }
+            if (effect.name === 'bounce') {
+                return new BounceEffect(this.app, this.sprite, this.resources, effect);
+            }
+            if (effect.name === 'transition') {
+                return new TransitionEffect(this.app, this.sprite, this.resources, effect);
+            }
+            if (effect.name === 'fade_out') {
+                return new FadeOutEffect(this.app, this.sprite, this.resources, effect);
+            }
+            if (effect.name === 'spin') {
+                return new SpinEffect(this.app, this.sprite, this.resources, effect);
+            }
+            console.warn(`No effect found for ${effect.name}`);
+        });
+
         this.interactive();
         this.sprite.interactive = true;
         this.sprite.buttonMode = true;
         this.sprite.eventMode = 'static';
-        this.sprite.addListener('pointerup', this.findOnTouchAction(meta));
+        this.sprite.addListener('pointerup', () => {
+            chain.forEach((effect) => {
+                effect.execute();
+            });
+        });
     }
 
     interactive() {
@@ -235,53 +272,103 @@ class Character {
             })];
     }
 
-    findOnTouchAction(meta) {
-        const action = meta.action;
-        console.log(`finding associative onTouch function for ${meta.action}`);
-        if (action === 'jump') {
-            return this.jump.bind(this);
-        }
-        if (action === 'spin') {
-            this.sprite.anchor.set(0.5);
-            this.ticker = new PIXI.Ticker();
-            this.ticker.add((time) => {
-                this.sprite.rotation += 0.1 * time.deltaTime;
-            });
-            return this.spin.bind(this);
-        }
-        if (action === 'fade_out') {
-            this.ticker = new PIXI.Ticker();
-            this.ticker.add((time) => {
-                this.sprite.alpha -= meta.speed * time.deltaTime;
-                if (this.sprite.alpha <= 0.0) {
-                    this.ticker.stop();
-                    this.app.stage.removeChild(this.sprite);
+}
 
-                }
-            });
-            return () => {
-                this.ticker.start();
-                if (meta.sound) {
-                    this.resources[meta.sound].play();
-                }
-            };
-        }
-        if (meta.sound) {
-            return (e) => {
-                this.resources[meta.sound].play();
-            }
-        }
+class AudioEffect {
 
-        return (e) => {
-        };
+    constructor(app, sprite, resources, props) {
+        this.app = app;
+        this.sprite = sprite;
+        this.resources = resources;
+        this.sound = props.sound;
+        this.name = props.name;
+        this.audio = this.resources[this.sound];
+        console.log(`registering ${this.name} effect`);
     }
 
-    jump() {
-        const soundFile = this.onTouch.sound;
-        if (soundFile) {
-            this.resources[soundFile].play();
-        }
+    execute() {
+        this.audio.play();
+    }
+
+}
+
+class BounceEffect {
+    constructor(app, sprite, resources, props) {
+        this.app = app;
+        this.sprite = sprite;
+        this.resources = resources;
+        this.name = props.name;
+        this.sound = props.sound;
+        this.speed = props.speed;
+        console.log(`registering ${this.name} effect`);
+    }
+
+    execute() {
         this.sprite.position.y = this.sprite.position.y - 100;
+    }
+}
+
+class TransitionEffect {
+    constructor(app, sprite, resources, props) {
+        this.app = app;
+        this.sprite = sprite;
+        this.name = props.name;
+        this.resources = resources;
+        this.source = props.image;
+        this.image = this.resources[props.image];
+        console.log(`registering ${this.name} effect`);
+    }
+
+    execute() {
+        const texture = PIXI.Texture.from(this.source);
+        this.sprite.texture = texture;
+    }
+
+}
+
+class FadeOutEffect {
+    constructor(app, sprite, resources, props) {
+        this.app = app;
+        this.sprite = sprite;
+        this.resources = resources;
+        this.name = props.name;
+        this.speed = props.speed;
+        this.ticker = new PIXI.Ticker();
+        this.ticker.add((time) => {
+            this.sprite.alpha -= this.speed * time.deltaTime;
+            if (this.sprite.alpha <= 0.0) {
+                this.ticker.stop();
+                this.app.stage.removeChild(this.sprite);
+            }
+        });
+
+        console.log(`registering ${this.name} effect`);
+    }
+
+    execute() {
+        this.ticker.start();
+    }
+}
+
+class SpinEffect {
+    constructor(app, sprite, resources, props) {
+        this.app = app;
+        this.sprite = sprite;
+        this.resources = resources;
+        this.name = props.name;
+        this.sound = props.sound;
+        this.speed = props.speed;
+        console.log(`registering ${this.name} effect`);
+    }
+
+    execute() {
+        this.sprite.anchor.set(0.5);
+        this.ticker = new PIXI.Ticker();
+        this.ticker.add((time) => {
+            this.sprite.rotation += 0.1 * time.deltaTime;
+        });
+        const spinning = this.spin.bind(this);
+        spinning();
     }
 
     spin() {
