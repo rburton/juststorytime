@@ -1,8 +1,8 @@
-{
+  {
   "title": "Story time",
   "splash": {
-    "image": "/assets/splash.png",
-    "sound": "/assets/splash.mp3"
+    "image": "/juststorytime/assets/splash.png",
+    "sound": "/juststorytime/assets/splash.mp3"
   },
   "settings": {
     "velocity": 0,
@@ -16,11 +16,11 @@
   "start": "scene-00",
   "scenes": {
     "scene-00": {
-      "background": "/assets/scene-00/living_room.png",
+      "background": "/juststorytime/assets/scene-00/living_room.png",
       "objects": [
         {
           "name": "Presely",
-          "image": "/assets/characters/presely.png",
+          "image": "/juststorytime/assets/characters/presely.png",
           "type": "character",
           "settings": {
             "gravity": 0.3,
@@ -40,7 +40,7 @@
               "effects": [
                 {
                   "name": "audio",
-                  "sound": "/assets/sounds/hey-wait-up.mp3"
+                  "sound": "/juststorytime/assets/sounds/hey-wait-up.mp3"
                 }
               ]
             }
@@ -48,7 +48,7 @@
         },
         {
           "name": "Joe",
-          "image": "/assets/characters/joe-standing.png",
+          "image": "/juststorytime/assets/characters/joe-standing.png",
           "type": "character",
           "settings": {
             "gravity": 0.3
@@ -64,7 +64,7 @@
               "effects": [
                 {
                   "name": "audio",
-                  "sound": "/assets/sounds/joe-speech.mp3"
+                  "sound": "/juststorytime/assets/sounds/joe-speech.mp3"
                 }
               ]
             }
@@ -72,7 +72,7 @@
         },
         {
           "name": "Cash",
-          "image": "/assets/characters/cash.png",
+          "image": "/juststorytime/assets/characters/cash.png",
           "type": "character",
           "settings": {
             "gravity": 0.3
@@ -88,7 +88,7 @@
               "effects": [
                 {
                   "name": "audio",
-                  "sound": "/assets/sounds/cash-snoring.mp3"
+                  "sound": "/juststorytime/assets/sounds/cash-snoring.mp3"
                 }
               ]
             }
@@ -96,7 +96,7 @@
         },
         {
           "name": "Fly",
-          "image": "/assets/characters/fly.png",
+          "image": "/juststorytime/assets/characters/fly.png",
           "type": "object",
           "settings": {
             "gravity": 0.0,
@@ -119,11 +119,11 @@
               "effects": [
                 {
                   "name": "transition",
-                  "image": "/assets/characters/goo.png"
+                  "image": "/juststorytime/assets/characters/goo.png"
                 },
                 {
                   "name": "audio",
-                  "sound": "/assets/sounds/splat.mp3"
+                  "sound": "/juststorytime/assets/sounds/splat.mp3"
                 },
                 {
                   "name": "fade_out",
@@ -135,7 +135,7 @@
         },
         {
           "name": "Fly",
-          "image": "/assets/characters/fly.png",
+          "image": "/juststorytime/assets/characters/fly.png",
           "type": "object",
           "settings": {
             "gravity": 0.0,
@@ -158,11 +158,11 @@
               "effects": [
                 {
                   "name": "transition",
-                  "image": "/assets/characters/goo.png"
+                  "image": "/juststorytime/assets/characters/goo.png"
                 },
                 {
                   "name": "audio",
-                  "sound": "/assets/sounds/splat.mp3"
+                  "sound": "/juststorytime/assets/sounds/splat.mp3"
                 },
                 {
                   "name": "fade_out",
@@ -174,7 +174,7 @@
         },
         {
           "name": "Fly",
-          "image": "/assets/characters/fly.png",
+          "image": "/juststorytime/assets/characters/fly.png",
           "type": "object",
           "settings": {
             "gravity": 0.0,
@@ -197,11 +197,11 @@
               "effects": [
                 {
                   "name": "transition",
-                  "image": "/assets/characters/goo.png"
+                  "image": "/juststorytime/assets/characters/goo.png"
                 },
                 {
                   "name": "audio",
-                  "sound": "/assets/sounds/splat.mp3"
+                  "sound": "/juststorytime/assets/sounds/splat.mp3"
                 },
                 {
                   "name": "fade_out",
@@ -213,7 +213,7 @@
         },
         {
           "name": "Fly",
-          "image": "/assets/characters/fly.png",
+          "image": "/juststorytime/assets/characters/fly.png",
           "type": "object",
           "settings": {
             "flip": true,
@@ -237,11 +237,11 @@
               "effects": [
                 {
                   "name": "transition",
-                  "image": "/assets/characters/goo.png"
+                  "image": "/juststorytime/assets/characters/goo.png"
                 },
                 {
                   "name": "audio",
-                  "sound": "/assets/sounds/splat.mp3"
+                  "sound": "/juststorytime/assets/sounds/splat.mp3"
                 },
                 {
                   "name": "fade_out",
@@ -255,7 +255,7 @@
       "transition": {
         "in": {
           "effect": "fade",
-          "sound": "/assets/wind.mp3"
+          "sound": "/juststorytime/assets/wind.mp3"
         }
       }
     }
