@@ -1,4 +1,4 @@
-  {
+{
   "title": "Story time",
   "splash": {
     "image": "/juststorytime/assets/splash.png",
@@ -109,12 +109,17 @@
             "x1": 1100,
             "y1": 170
           },
-          "animate": {
-            "type": "right_to_left",
-            "speed": 1,
-            "pause_in_ms": 6000
-          },
           "actions": {
+            "onload": {
+              "effects": [
+                {
+                  "name": "move",
+                  "direction": "left",
+                  "speed": 1,
+                  "pause_in_ms": 6000
+                }
+              ]
+            },
             "touch": {
               "effects": [
                 {
@@ -148,12 +153,17 @@
             "x1": 1100,
             "y1": 100
           },
-          "animate": {
-            "type": "right_to_left",
-            "speed": 1,
-            "pause_in_ms": 400
-          },
           "actions": {
+            "onload": {
+              "effects": [
+                {
+                  "name": "move",
+                  "direction": "left",
+                  "speed": 1,
+                  "pause_in_ms": 400
+                }
+              ]
+            },
             "touch": {
               "effects": [
                 {
@@ -187,12 +197,18 @@
             "x1": 1100,
             "y1": 190
           },
-          "animate": {
-            "type": "right_to_left",
-            "speed": 2,
-            "pause_in_ms": 3500
-          },
           "actions": {
+
+            "onload": {
+              "effects": [
+                {
+                  "name": "move",
+                  "direction": "left",
+                  "speed": 2,
+                  "pause_in_ms": 3500
+                }
+              ]
+            },
             "touch": {
               "effects": [
                 {
@@ -227,12 +243,18 @@
             "x1": -100,
             "y1": 190
           },
-          "animate": {
-            "type": "left_to_right",
-            "speed": 2,
-            "pause_in_ms": 100
-          },
           "actions": {
+
+            "onload": {
+              "effects": [
+                {
+                  "name": "move",
+                  "direction": "right",
+                  "speed": 2,
+                  "pause_in_ms": 100
+                }
+              ]
+            },
             "touch": {
               "effects": [
                 {

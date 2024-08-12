@@ -4,48 +4,8 @@ class Story {
         this.data = json;
         this.settings = json.settings;
         this.scenes = json.scenes;
-        this.manifest = [
-            {alias: 'splash_img', src: json.splash.image},
-            {alias: 'splash_sound', src: json.splash.sound},
-        ];
+        this.manifest = toManifest(json);
 
-        const assets = []
-        Object.keys(this.scenes)
-            .forEach((id) => {
-                const scene = this.data.scenes[id];
-                assets.push(scene.background);
-
-                const sounds = scene.sounds;
-                if (sounds) {
-                    sounds.forEach((sound) => {
-                        assets.push(sound.file);
-                    });
-                }
-                const objects = scene.objects;
-                objects.forEach((obj) => {
-                    assets.push(obj.image);
-                    if (obj.actions) {
-                        const actions = obj.actions;
-                        Object.keys(actions)
-                            .forEach((action) => {
-                                const meta = actions[action];
-                                if (meta && meta.effects) {
-                                    const effects = meta.effects;
-                                    effects.forEach((effect) => {
-                                        if (effect.name === 'audio') {
-                                            assets.push(effect.sound);
-                                        } else if (effect.name === 'transition') {
-                                            assets.push(effect.image);
-                                        }
-                                    });
-                                }
-                            });
-                    }
-                });
-            });
-        assets.forEach((asset) => {
-            this.manifest.push({alias: asset, src: asset});
-        });
     }
 
     async load() {
@@ -102,6 +62,13 @@ class Scene {
         this.characters.forEach((character) => {
             character.onShow();
         });
+        setInterval(() => {
+            this.characters.filter((character) => {
+                if (character.name === 'Fly') {
+                    character.onShow();
+                }
+            })
+        }, 2000);
     }
 
     playSound() {
@@ -152,6 +119,7 @@ class Character {
         this.image = data.image;
         this.position = data.position;
         this.resources = story.resources;
+        this.onLoadChain = [];
     }
 
     onShow() {
@@ -159,7 +127,6 @@ class Character {
         this.sprite = PIXI.Sprite.from(image);
         this.sprite.position.x = this.position.x1;
         this.sprite.position.y = this.position.y1;
-
         if (this.data.settings) {
             const settings = this.data.settings;
             const scale = settings.scale;
@@ -172,31 +139,10 @@ class Character {
         }
         this.configureActions();
         this.app.stage.addChild(this.sprite);
-        this.animate();
         this.dropFromSky();
-    }
-
-    animate() {
-        this.dropFromSky();
-        if (this.data.animate) {
-            const animate = this.data.animate;
-            let delay = animate.pause_in_ms;
-
-            if (delay === undefined) {
-                delay = 0;
-            }
-            console.log(`${this.name} is waiting for ${delay}ms to move ${animate.type}`);
-            setTimeout(() => {
-                this.app.ticker.add((delta) => {
-                    let increment = animate.speed;
-                    if (animate.type === 'right_to_left') {
-                        increment *= -1;
-                    }
-                    this.sprite.position.x += (increment * delta.deltaTime);
-                });
-            }, delay);
-
-        }
+        this.onLoadChain.forEach((effect) => {
+            effect.execute();
+        });
     }
 
     dropFromSky() {
@@ -224,6 +170,29 @@ class Character {
                     const meta = property[1];
                     if (action === 'touch') {
                         this.setupOnTouch(meta.effects);
+                    } else if (action === 'onload') {
+                        this.onLoadChain = meta.effects.map((effect) => {
+                            console.log(`Creating new effect ${effect.name}`);
+                            if (effect.name === 'audio') {
+                                return new AudioEffect(this.app, this.sprite, this.resources, effect);
+                            }
+                            if (effect.name === 'move') {
+                                return new MoveEffect(this.app, this.sprite, this.resources, effect);
+                            }
+                            if (effect.name === 'bounce') {
+                                return new BounceEffect(this.app, this.sprite, this.resources, effect);
+                            }
+                            if (effect.name === 'transition') {
+                                return new TransitionEffect(this.app, this.sprite, this.resources, effect);
+                            }
+                            if (effect.name === 'fade_out') {
+                                return new FadeOutEffect(this.app, this.sprite, this.resources, effect);
+                            }
+                            if (effect.name === 'spin') {
+                                return new SpinEffect(this.app, this.sprite, this.resources, effect);
+                            }
+                            console.warn(`No effect found for ${effect.name}`);
+                        });
                     }
                 });
         }
@@ -234,6 +203,9 @@ class Character {
             console.log(`Creating new effect ${effect.name}`);
             if (effect.name === 'audio') {
                 return new AudioEffect(this.app, this.sprite, this.resources, effect);
+            }
+            if (effect.name === 'move') {
+                return new MoveEffect(this.app, this.sprite, this.resources, effect);
             }
             if (effect.name === 'bounce') {
                 return new BounceEffect(this.app, this.sprite, this.resources, effect);
@@ -278,7 +250,6 @@ class AudioEffect {
 
     constructor(app, sprite, resources, props) {
         this.app = app;
-        this.sprite = sprite;
         this.resources = resources;
         this.sound = props.sound;
         this.name = props.name;
@@ -287,6 +258,9 @@ class AudioEffect {
     }
 
     execute() {
+        if (this.audio.isPlaying) {
+            this.audio.stop();
+        }
         this.audio.play();
     }
 
@@ -320,8 +294,7 @@ class TransitionEffect {
     }
 
     execute() {
-        const texture = PIXI.Texture.from(this.source);
-        this.sprite.texture = texture;
+        this.sprite.texture = PIXI.Texture.from(this.source);
     }
 
 }
@@ -379,5 +352,81 @@ class SpinEffect {
         }
         this.ticker.start();
     }
+
+}
+
+class MoveEffect {
+    constructor(app, sprite, resources, props) {
+        this.app = app;
+        this.sprite = sprite;
+        this.resources = resources;
+        this.name = props.name;
+        this.pause_in_ms = props.pause_in_ms;
+        this.speed = props.speed;
+        this.direction = props.direction;
+        console.log(`registering ${this.name} effect`);
+    }
+
+    execute() {
+        let delay = this.pause_in_ms;
+        if (delay === undefined) {
+            delay = 0;
+        }
+        console.log(`${this.name} is waiting for ${delay}ms to move ${this.direction}`);
+
+        setTimeout(() => {
+            this.app.ticker.add((delta) => {
+                let increment = this.speed;
+                if (this.direction === 'left') {
+                    increment *= -1;
+                }
+                this.sprite.position.x += (increment * delta.deltaTime);
+            });
+        }, delay);
+    }
+
+}
+
+// https://pixijs.com/8.x/examples/filters-basic/blur
+function toManifest(story) {
+    const assets = new Set();
+    assets.add(story.splash.image);
+    assets.add(story.splash.sound);
+    Object.keys(story.scenes)
+        .forEach((id) => {
+            const scene = story.scenes[id];
+            assets.add(scene.background);
+
+            const sounds = scene.sounds;
+            if (sounds) {
+                sounds.forEach((sound) => {
+                    assets.add(sound.file);
+                });
+            }
+            const objects = scene.objects;
+            objects.forEach((obj) => {
+                assets.add(obj.image);
+                if (obj.actions) {
+                    const actions = obj.actions;
+                    Object.keys(actions)
+                        .forEach((action) => {
+                            const meta = actions[action];
+                            if (meta && meta.effects) {
+                                const effects = meta.effects;
+                                effects.forEach((effect) => {
+                                    if (effect.name === 'audio') {
+                                        assets.add(effect.sound);
+                                    } else if (effect.name === 'transition') {
+                                        assets.add(effect.image);
+                                    }
+                                });
+                            }
+                        });
+                }
+            });
+        });
+
+    return Array.from(assets)
+        .map(asset => ({alias: asset, src: asset}));
 
 }
